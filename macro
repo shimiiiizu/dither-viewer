@@ -1,0 +1,78 @@
+Public Kaichou As Integer
+
+Public Sub CommandButton1_Click()
+
+Kaichou = TextBox1.Value
+
+Debug.Print Kaichou
+
+Call View2(Kaichou)
+
+End Sub
+
+
+Sub View2(Kaichou As Integer)
+
+'入力した諧調を表示
+
+
+'◆宣言
+Dim Width
+Dim Height
+Dim MatrixSize
+Dim Matrix
+Dim FulllTable
+Dim Level
+Dim TotalLevel
+Dim i
+Dim j
+Dim WaitTime
+
+'◆代入
+Width = 2
+Height = 2
+MatrixSize = Width * Height
+Total = 6
+
+Matrix = Range(Cells(1, 1), Cells(Height, Width))
+Fulltable = Range(Cells(4, 1), Cells(9, MatrixSize))
+
+ i = Kaichou '‐‐‐★フルテーブルの諧調を指定
+
+    '◆所定時間待つ
+    WaitTime = Now + TimeValue("0:00:01")
+    Application.Wait WaitTime
+
+    For j = 1 To MatrixSize  '‐‐‐Marixテーブル分ループ
+
+    '◆フル諧調の設定
+        Cells(1, 6) = i
+        Level = Cells(1, 6)
+
+            '◆フルテーブルをもとにViewerに値をコピー
+           Cells(Int((j - 1) / 2) + 12, (j - 1) Mod 2 + 1) = Fulltable(Level, j)
+            Valuefull = Fulltable(Level, j)
+
+
+            '◆Viewerに色付け
+            Select Case Cells(3, j)
+
+                Case "C"
+                    Cells(Int((j - 1) / 2) + 12, (j - 1) Mod 2 + 1).Interior.Color = RGB(255 - Valuefull, 255 - Valuefull, 255 - Valuefull)
+
+                Case "L"
+                    Cells(Int((j - 1) / 2) + 12, (j - 1) Mod 2 + 1).Interior.Color = RGB(255 - Valuefull, 255, 255)
+
+                Case "R"
+                    Cells(Int((j - 1) / 2) + 12, (j - 1) Mod 2 + 1).Interior.Color = RGB(255, 255 - Valuefull, 255)
+
+                Case "S"
+                    Cells(Int((j - 1) / 2) + 12, (j - 1) Mod 2 + 1).Interior.Color = RGB(255, 255, 255 - Valuefull)
+
+            End Select
+
+    Next j
+
+
+
+End Sub
